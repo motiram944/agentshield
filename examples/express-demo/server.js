@@ -318,36 +318,65 @@ app.get('/', (req, res) => {
       
       const overlay = document.createElement('div');
       overlay.id = 'agentshield-lockdown-overlay';
-      overlay.style.cssText = 'position: fixed; inset: 0; z-index: 2147483647; background: rgba(9, 13, 22, 0.88); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); display: flex; align-items: center; justify-content: center; padding: 1.5rem; font-family: Outfit, sans-serif;';
+      overlay.style.cssText = 'position: fixed; inset: 0; z-index: 2147483647; background: rgba(10, 15, 29, 0.85); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); display: flex; align-items: center; justify-content: center; padding: 1.5rem; font-family: Outfit, sans-serif;';
       overlay.innerHTML = 
-        '<div style="background: rgba(18, 24, 38, 0.96); border: 1px solid rgba(239, 68, 68, 0.5); border-radius: 1.25rem; max-width: 520px; width: 100%; padding: 2.25rem; box-shadow: 0 25px 60px -15px rgba(0,0,0,0.8), 0 0 35px rgba(239,68,68,0.3); text-align: center; color: #f3f4f6;">' +
-          '<div style="width: 64px; height: 64px; border-radius: 50%; background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.5); display: flex; align-items: center; justify-content: center; margin: 0 auto 1.25rem auto; font-size: 32px;">🛡️</div>' +
-          '<h2 style="margin: 0 0 0.5rem 0; font-size: 1.4rem; font-weight: 700; color: #f87171;">Autonomous AI Activity Mitigated</h2>' +
-          '<p style="margin: 0 0 1.25rem 0; font-size: 0.9rem; line-height: 1.5; color: #94a3b8;">Harmful autonomous AI behavior was detected. The frontend interface has been frozen to prevent unauthorized data exfiltration, automated form manipulation, and resource abuse.</p>' +
-          '<div style="display: flex; justify-content: center; gap: 1rem; margin-bottom: 1.5rem; font-size: 0.82rem;">' +
-            '<div style="background: rgba(255,255,255,0.06); padding: 0.4rem 0.8rem; border-radius: 0.5rem; border: 1px solid rgba(255,255,255,0.08);">Threat Score: <strong style="color: #ef4444;">' + risk + '/100</strong></div>' +
-            '<div style="background: rgba(255,255,255,0.06); padding: 0.4rem 0.8rem; border-radius: 0.5rem; border: 1px solid rgba(255,255,255,0.08);">Classified Intent: <strong style="color: #38bdf8;">' + intent + '</strong></div>' +
+        '<div style="background: rgba(18, 24, 39, 0.98); border: 1px solid rgba(59, 130, 246, 0.35); border-radius: 1.25rem; max-width: 480px; width: 100%; padding: 2.25rem; box-shadow: 0 25px 60px -15px rgba(0,0,0,0.8), 0 0 35px rgba(59, 130, 246, 0.2); text-align: center; color: #f3f4f6;">' +
+          '<div style="width: 58px; height: 58px; border-radius: 50%; background: rgba(59, 130, 246, 0.15); border: 1px solid rgba(59, 130, 246, 0.4); display: flex; align-items: center; justify-content: center; margin: 0 auto 1.25rem auto; font-size: 26px;">🛡️</div>' +
+          '<h2 style="margin: 0 0 0.5rem 0; font-size: 1.35rem; font-weight: 700; color: #f8fafc;">Security Verification</h2>' +
+          '<p style="margin: 0 0 1.25rem 0; font-size: 0.9rem; line-height: 1.5; color: #94a3b8;">A brief verification check is required to protect application services and ensure uninterrupted browsing.</p>' +
+          '<div id="as-verification-status" style="display: none; padding: 0.75rem 1rem; border-radius: 0.6rem; border: 1px solid; margin-bottom: 1.25rem; font-size: 0.85rem; text-align: left; line-height: 1.4;"></div>' +
+          '<div style="display: flex; justify-content: center; gap: 0.75rem; margin-bottom: 1.5rem; font-size: 0.8rem;">' +
+            '<div style="background: rgba(255,255,255,0.05); padding: 0.35rem 0.75rem; border-radius: 0.5rem; border: 1px solid rgba(255,255,255,0.08); color: #cbd5e1;">Status: <strong style="color: #38bdf8;">Verification Pending</strong></div>' +
+            '<div style="background: rgba(255,255,255,0.05); padding: 0.35rem 0.75rem; border-radius: 0.5rem; border: 1px solid rgba(255,255,255,0.08); color: #94a3b8;">AgentShield • Privacy First</div>' +
           '</div>' +
-          '<button id="btnHumanResume" onclick="resumeHumanSession()" style="width: 100%; background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; border: none; padding: 0.9rem 1.5rem; font-size: 1rem; font-weight: 600; border-radius: 0.75rem; cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.35);">👤 I am a Human — Verify & Resume Session</button>' +
+          '<button id="btnHumanResume" onclick="resumeHumanSession(event)" style="width: 100%; background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); color: white; border: none; padding: 0.9rem 1.5rem; font-size: 1rem; font-weight: 600; border-radius: 0.75rem; cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);">👤 Click to Verify & Continue</button>' +
         '</div>';
       document.body.appendChild(overlay);
-      log('🔒 FRONTEND ACTIVE DEFENSE ACTIVATED: Interface locked against autonomous AI agent.');
+      log('🔒 SECURITY INTERSTITIAL PRESENTED: Verification required before continuing.');
     }
 
-    async function resumeHumanSession() {
-      log('🤝 Human verification clicked. Verifying human dwell dynamics and restoring session...');
+    async function resumeHumanSession(e) {
+      log('🤝 Verification button clicked. Inspecting human biometrics (event trust, dwell time, and cursor dynamics)...');
+      
+      // Reject AI Bot Synthetic Clicks:
+      // If an AI script dispatches a programmatic click, it has dwellTime < 25ms, isTrusted false, or webdriver true
+      const isAiBotClick = !e.isTrusted || Boolean(navigator.webdriver) || (dwellTimeMs < 25 && dwellTimeMs >= 0) || isTeleported;
+      const statusBox = document.getElementById('as-verification-status');
+
+      if (isAiBotClick) {
+        log('🚫 AI BOT BYPASS ATTEMPT DETECTED: Synthetic click on verification button rejected! (Reason: Synthetic Click Dynamics)');
+        if (statusBox) {
+          statusBox.style.display = 'block';
+          statusBox.innerHTML = '⚠️ <strong>Verification Rejected:</strong> Automated synthetic click detected. AI agents cannot bypass this verification.';
+          statusBox.style.color = '#f87171';
+          statusBox.style.background = 'rgba(239, 68, 68, 0.12)';
+          statusBox.style.borderColor = 'rgba(239, 68, 68, 0.35)';
+        }
+        return; // SCREEN STAYS LOCKED!
+      }
+
+      // Legitimate Human Verification Passed!
+      if (statusBox) {
+        statusBox.style.display = 'block';
+        statusBox.innerHTML = '✅ <strong>Human Verified!</strong> Restoring session...';
+        statusBox.style.color = '#34d399';
+        statusBox.style.background = 'rgba(16, 185, 129, 0.12)';
+        statusBox.style.borderColor = 'rgba(16, 185, 129, 0.35)';
+      }
+
       try {
         await fetch('/_agentshield/resume', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', 'x-agentshield-session': sessionId }
         });
-      } catch (e) {}
+      } catch (err) {}
 
-      const overlay = document.getElementById('agentshield-lockdown-overlay');
-      if (overlay) overlay.remove();
-
-      updateUI(0, 'ALLOW', 'NORMAL_BROWSING');
-      log('✅ HUMAN ACCESS RESTORED: Session unlocked. Risk reset to 0/100 (ALLOW). User can resume work seamlessly.');
+      setTimeout(() => {
+        const overlay = document.getElementById('agentshield-lockdown-overlay');
+        if (overlay) overlay.remove();
+        updateUI(0, 'ALLOW', 'NORMAL_BROWSING');
+        log('✅ HUMAN ACCESS RESTORED: Session unlocked. Risk reset to 0/100 (ALLOW). Legitimate user resumed.');
+      }, 600);
     }
 
     async function simNormal() {
