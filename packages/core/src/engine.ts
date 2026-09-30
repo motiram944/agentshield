@@ -122,6 +122,12 @@ export class AgentShieldEngine implements DetectionEngine {
 
     // 5. Risk Model Inference
     const prediction = this.model.predict(features, { request, session });
+    if (session.riskScore > 0 && prediction.score < session.riskScore) {
+      prediction.score = Math.max(prediction.score, session.riskScore);
+      if (session.detectedIntent && session.detectedIntent !== 'NORMAL_BROWSING') {
+        prediction.intent.intent = session.detectedIntent;
+      }
+    }
     if (flowAnomaly.isAnomaly && flowAnomaly.reason) {
       prediction.reasons.push({
         code: 'ABNORMAL_APPLICATION_FLOW',
@@ -237,8 +243,18 @@ export class AgentShieldEngine implements DetectionEngine {
     session.browserSignals = signals;
     session.lastSeenAt = now;
 
-    // Recalculate automation risk if driver detected in browser
-    if (signals.automationFlags?.hasWebDriver || signals.automationFlags?.hasAutomationGlobals) {
+    // Recalculate automation risk if driver or stealth bot detected in browser
+    if (signals.automationFlags?.isWebDriverSpoofed || signals.automationFlags?.hasCdpArtifacts) {
+      session.riskScore = Math.max(session.riskScore, 85);
+      session.riskLevel = this.calculateRiskLevel(session.riskScore);
+      session.detectedIntent = 'STEALTH_AUTOMATION';
+      session.action = 'BLOCK';
+    } else if (signals.automationFlags?.isTeleportedClick || signals.automationFlags?.biometricAnomaly || (signals.automationFlags?.humanLikelihoodScore !== undefined && signals.automationFlags.humanLikelihoodScore < 0.35)) {
+      session.riskScore = Math.max(session.riskScore, 75);
+      session.riskLevel = this.calculateRiskLevel(session.riskScore);
+      session.detectedIntent = 'STEALTH_AUTOMATION';
+      session.action = 'RESTRICT';
+    } else if (signals.automationFlags?.hasWebDriver || signals.automationFlags?.hasAutomationGlobals) {
       session.riskScore = Math.max(session.riskScore, 65);
       session.riskLevel = this.calculateRiskLevel(session.riskScore);
       session.detectedIntent = 'AUTOMATION';

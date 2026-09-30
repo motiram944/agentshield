@@ -19,6 +19,7 @@ export type RiskLevel =
 export type AgentIntent =
   | 'NORMAL_BROWSING'
   | 'AUTOMATION'
+  | 'STEALTH_AUTOMATION'
   | 'API_USAGE'
   | 'ACCOUNT_AUTOMATION'
   | 'RECONNAISSANCE'
@@ -153,6 +154,12 @@ export interface BrowserSignalPayload {
     hasConsistentLanguages: boolean;
     hasHeadlessScreenDims: boolean;
     hasTamperedUserAgent: boolean;
+    isWebDriverSpoofed?: boolean;
+    hasCdpArtifacts?: boolean;
+    isTeleportedClick?: boolean;
+    clickDwellTimeMs?: number;
+    biometricAnomaly?: boolean;
+    humanLikelihoodScore?: number;
   };
   /** Client environment metadata (non-fingerprinting) */
   clientContext?: {
@@ -223,6 +230,9 @@ export interface FeatureVector {
   interactionVariance: number;
   hasAutomationIndicators: boolean;
   isHeadlessBrowser: boolean;
+  hasStealthAutomation?: boolean;
+  isTeleportedClick?: boolean;
+  biometricAnomaly?: boolean;
   graphTransitionAnomaly: boolean;
   hasSessionAnomaly: boolean;
 }

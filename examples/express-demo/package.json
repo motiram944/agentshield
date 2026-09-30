@@ -9,5 +9,8 @@
   "dependencies": {
     "agentshield-core": "latest",
     "express": "^4.21.2"
+  },
+  "devDependencies": {
+    "playwright": "^1.63.0"
   }
 }

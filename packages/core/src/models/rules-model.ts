@@ -48,6 +48,30 @@ export class RuleBasedRiskModel implements RiskModel {
     const reasons: RiskReason[] = [];
 
     // 1. AUTOMATION DETECTION
+    if (features.hasStealthAutomation) {
+      reasons.push({
+        code: 'STEALTH_AUTOMATION_EVASION',
+        weight: 60,
+        description: 'Prototype tampering on navigator.webdriver or CDP automation bindings detected',
+      });
+    }
+
+    if (features.isTeleportedClick) {
+      reasons.push({
+        code: 'TELEPORTED_CLICK',
+        weight: 45,
+        description: 'Synthetic click executed without natural cursor trajectory or sub-human dwell time',
+      });
+    }
+
+    if (features.biometricAnomaly) {
+      reasons.push({
+        code: 'BIOMETRIC_ANOMALY',
+        weight: 35,
+        description: 'Interaction biometrics deviate significantly from human physical patterns',
+      });
+    }
+
     if (features.isHeadlessBrowser) {
       reasons.push({
         code: 'HEADLESS_BROWSER',
@@ -195,6 +219,10 @@ export class RuleBasedRiskModel implements RiskModel {
 
     if (reasonCodes.has('DEBUG_ENDPOINT_PROBING') || reasonCodes.has('ADMIN_ENDPOINT_PROBING') || reasonCodes.has('HIGH_404_RATIO')) {
       return { intent: 'RECONNAISSANCE', confidence: 0.85 };
+    }
+
+    if (reasonCodes.has('STEALTH_AUTOMATION_EVASION') || reasonCodes.has('TELEPORTED_CLICK')) {
+      return { intent: 'STEALTH_AUTOMATION', confidence: 0.94 };
     }
 
     if (reasonCodes.has('HEADLESS_BROWSER') || reasonCodes.has('AUTOMATION_INDICATORS')) {

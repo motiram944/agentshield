@@ -108,6 +108,9 @@ export class DefaultFeatureExtractor implements FeatureExtractor {
     // 5. Browser Automation Heuristics from correlation
     let hasAutomationIndicators = false;
     let isHeadlessBrowser = false;
+    let hasStealthAutomation = false;
+    let isTeleportedClick = false;
+    let biometricAnomaly = false;
 
     if (session.browserSignals) {
       const auto = session.browserSignals.automationFlags;
@@ -117,6 +120,15 @@ export class DefaultFeatureExtractor implements FeatureExtractor {
         }
         if (auto.hasHeadlessScreenDims || auto.hasTamperedUserAgent) {
           isHeadlessBrowser = true;
+        }
+        if (auto.isWebDriverSpoofed || auto.hasCdpArtifacts || (auto.humanLikelihoodScore !== undefined && auto.humanLikelihoodScore < 0.4)) {
+          hasStealthAutomation = true;
+        }
+        if (auto.isTeleportedClick) {
+          isTeleportedClick = true;
+        }
+        if (auto.biometricAnomaly) {
+          biometricAnomaly = true;
         }
       }
     }
@@ -152,6 +164,9 @@ export class DefaultFeatureExtractor implements FeatureExtractor {
       interactionVariance,
       hasAutomationIndicators,
       isHeadlessBrowser,
+      hasStealthAutomation,
+      isTeleportedClick,
+      biometricAnomaly,
       graphTransitionAnomaly: false, // Updated by Graph Engine
       hasSessionAnomaly: burstRatePer10Sec > 25,
     };

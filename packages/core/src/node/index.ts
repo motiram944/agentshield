@@ -33,7 +33,12 @@ export function agentShield(options: AgentShieldNodeOptions = {}): RequestHandle
   return async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       // 1. Check if correlation telemetry endpoint is called
-      if (req.method === 'POST' && req.path === '/_agentshield/events') {
+      const isEventsEndpoint = req.method === 'POST' && (
+        req.path === '/_agentshield/events' ||
+        req.originalUrl?.includes('/_agentshield/events') ||
+        (req.baseUrl === '/_agentshield/events' && req.path === '/')
+      );
+      if (isEventsEndpoint) {
         const body = (req as unknown as { body: import('../shared/index.js').BrowserSignalPayload }).body;
         const sessionId = req.headers[sessionHeader.toLowerCase()] as string | undefined;
         if (sessionId && body) {
