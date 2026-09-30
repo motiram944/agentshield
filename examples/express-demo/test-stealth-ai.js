@@ -60,7 +60,8 @@ async function runStealthAIDetectionTest() {
   await page.screenshot({ path: shotPath, fullPage: true });
   console.log(`📸 Screenshot saved: ${shotPath}\n`);
 
-  await page.waitForTimeout(5000);
+  console.log('✨ Live test finished! Leaving browser open on your screen for 15 seconds to inspect...');
+  await page.waitForTimeout(15000);
   await browser.close();
 
   console.log('🎉 Stealth AI Agent Detection Test Completed Successfully!');

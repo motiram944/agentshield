@@ -93,6 +93,7 @@ export function agentShield(options: AgentShieldNodeOptions = {}): RequestHandle
       // Set audit headers
       res.setHeader('X-AgentShield-Risk', String(result.riskScore.score));
       res.setHeader('X-AgentShield-Action', result.action);
+      res.setHeader('X-AgentShield-Intent', result.intent.intent);
       res.setHeader('X-AgentShield-Session', result.sessionId);
 
       // 4. Enforce Decision

@@ -309,13 +309,18 @@ app.get('/', (req, res) => {
     }
 
     async function simNormal() {
-      log('👤 Simulating normal user browsing /api/users/1...');
+      log('👤 Requesting /api/users/1...');
       await sendTelemetry();
       const res = await fetch('/api/users/1', { headers: { 'x-agentshield-session': sessionId } });
       const risk = res.headers.get('x-agentshield-risk') || '0';
       const action = res.headers.get('x-agentshield-action') || 'ALLOW';
-      updateUI(risk, action, 'NORMAL_BROWSING');
-      log('✅ Request Processed: HTTP ' + res.status + ' | Risk: ' + risk + ' | Action: ' + action);
+      const intent = res.headers.get('x-agentshield-intent') || (risk >= 65 ? 'AUTOMATION' : 'NORMAL_BROWSING');
+      updateUI(risk, action, intent);
+      if (Number(risk) >= 65) {
+        log('🛡️ CAUGHT AI DRIVER: HTTP ' + res.status + ' | Risk: ' + risk + ' | Action: ' + action + ' | Intent: ' + intent + ' (Automated agent flagged!)');
+      } else {
+        log('✅ Genuine Human Passed: HTTP ' + res.status + ' | Risk: ' + risk + ' | Action: ' + action + ' | Intent: ' + intent);
+      }
     }
 
     async function simStealth() {
