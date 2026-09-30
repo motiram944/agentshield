@@ -353,6 +353,115 @@ export class AgentShieldBrowser {
       humanLikelihoodScore,
     };
   }
+
+  // Active Frontend Defense State
+  private locked = false;
+  private overlayElement: HTMLElement | null = null;
+  private captureTrap = (e: Event): void => {
+    if (this.locked && !this.overlayElement?.contains(e.target as Node)) {
+      e.stopImmediatePropagation();
+      e.preventDefault();
+    }
+  };
+
+  /**
+   * Immediately freezes the frontend DOM to prevent harmful AI bots from clicking buttons,
+   * scraping sensitive data, or submitting forms, and displays a human verification modal.
+   */
+  lockdown(options: { reason?: string; risk?: number; intent?: string; onResume?: () => void } = {}): void {
+    if (this.locked || typeof document === 'undefined') return;
+    this.locked = true;
+
+    // 1. Sever event propagation to prevent scripted clicks/keys on the application
+    ['click', 'keydown', 'keypress', 'submit', 'change', 'input'].forEach((evt) => {
+      window.addEventListener(evt, this.captureTrap, true);
+    });
+
+    // 2. Inject high-priority security overlay & human verification modal
+    const overlay = document.createElement('div');
+    overlay.id = 'agentshield-lockdown-overlay';
+    overlay.style.cssText = `
+      position: fixed; inset: 0; z-index: 2147483647;
+      background: rgba(9, 13, 22, 0.88);
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      display: flex; align-items: center; justify-content: center;
+      padding: 1.5rem; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    `;
+
+    const riskVal = options.risk ?? 100;
+    const intentVal = options.intent ?? 'STEALTH_AUTOMATION';
+    const reasonMsg = options.reason ?? 'Automated agent activity detected. Access paused to protect web application data and integrity.';
+
+    overlay.innerHTML = `
+      <div style="background: rgba(18, 24, 38, 0.95); border: 1px solid rgba(239, 68, 68, 0.4); border-radius: 1rem; max-width: 500px; width: 100%; padding: 2rem; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.7), 0 0 35px rgba(239,68,68,0.25); text-align: center; color: #f3f4f6;">
+        <div style="width: 60px; height: 60px; border-radius: 50%; background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.4); display: flex; align-items: center; justify-content: center; margin: 0 auto 1.25rem auto; font-size: 28px;">
+          🛡️
+        </div>
+        <h2 style="margin: 0 0 0.5rem 0; font-size: 1.35rem; font-weight: 700; color: #f87171;">
+          Autonomous AI Agent Mitigated
+        </h2>
+        <p style="margin: 0 0 1.25rem 0; font-size: 0.9rem; line-height: 1.5; color: #94a3b8;">
+          ${reasonMsg}
+        </p>
+        <div style="display: flex; justify-content: center; gap: 1rem; margin-bottom: 1.5rem; font-size: 0.8rem;">
+          <div style="background: rgba(255,255,255,0.05); padding: 0.4rem 0.8rem; border-radius: 0.5rem; border: 1px solid rgba(255,255,255,0.08);">
+            Risk Score: <strong style="color: #ef4444;">${riskVal}/100</strong>
+          </div>
+          <div style="background: rgba(255,255,255,0.05); padding: 0.4rem 0.8rem; border-radius: 0.5rem; border: 1px solid rgba(255,255,255,0.08);">
+            Intent: <strong style="color: #38bdf8;">${intentVal}</strong>
+          </div>
+        </div>
+        <button id="as-human-verify-btn" style="width: 100%; background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; border: none; padding: 0.85rem 1.5rem; font-size: 0.95rem; font-weight: 600; border-radius: 0.6rem; cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.35);">
+          👤 I am a Human — Verify & Resume Session
+        </button>
+      </div>
+    `;
+
+    document.body.appendChild(overlay);
+    this.overlayElement = overlay;
+
+    // Attach human verification listener
+    const verifyBtn = overlay.querySelector('#as-human-verify-btn');
+    if (verifyBtn) {
+      verifyBtn.addEventListener('click', async () => {
+        await this.resumeSession();
+        if (options.onResume) options.onResume();
+      });
+    }
+  }
+
+  /**
+   * Restores human access, clears active defenses, and syncs session reset with the backend.
+   */
+  async resumeSession(): Promise<void> {
+    if (!this.locked || typeof document === 'undefined') return;
+
+    try {
+      await fetch('/_agentshield/resume', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-agentshield-session': this.sessionId,
+        },
+      });
+    } catch {}
+
+    // Remove event trap
+    ['click', 'keydown', 'keypress', 'submit', 'change', 'input'].forEach((evt) => {
+      window.removeEventListener(evt, this.captureTrap, true);
+    });
+
+    if (this.overlayElement) {
+      this.overlayElement.remove();
+      this.overlayElement = null;
+    }
+    this.locked = false;
+    this.isTeleportedClick = false;
+  }
+
+  isLocked(): boolean {
+    return this.locked;
+  }
 }
 
 /**

@@ -306,6 +306,48 @@ app.get('/', (req, res) => {
         circle.style.borderColor = 'var(--success)';
         circle.style.boxShadow = '0 0 25px rgba(16, 185, 129, 0.25)';
       }
+
+      // Engage Frontend Active Defense if critical threat or block detected
+      if (Number(risk) >= 75 && (action === 'BLOCK' || action === 'RESTRICT')) {
+        setTimeout(() => triggerFrontendLockdown(risk, intent), 400);
+      }
+    }
+
+    function triggerFrontendLockdown(risk, intent) {
+      if (document.getElementById('agentshield-lockdown-overlay')) return;
+      
+      const overlay = document.createElement('div');
+      overlay.id = 'agentshield-lockdown-overlay';
+      overlay.style.cssText = 'position: fixed; inset: 0; z-index: 2147483647; background: rgba(9, 13, 22, 0.88); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); display: flex; align-items: center; justify-content: center; padding: 1.5rem; font-family: Outfit, sans-serif;';
+      overlay.innerHTML = 
+        '<div style="background: rgba(18, 24, 38, 0.96); border: 1px solid rgba(239, 68, 68, 0.5); border-radius: 1.25rem; max-width: 520px; width: 100%; padding: 2.25rem; box-shadow: 0 25px 60px -15px rgba(0,0,0,0.8), 0 0 35px rgba(239,68,68,0.3); text-align: center; color: #f3f4f6;">' +
+          '<div style="width: 64px; height: 64px; border-radius: 50%; background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.5); display: flex; align-items: center; justify-content: center; margin: 0 auto 1.25rem auto; font-size: 32px;">🛡️</div>' +
+          '<h2 style="margin: 0 0 0.5rem 0; font-size: 1.4rem; font-weight: 700; color: #f87171;">Autonomous AI Activity Mitigated</h2>' +
+          '<p style="margin: 0 0 1.25rem 0; font-size: 0.9rem; line-height: 1.5; color: #94a3b8;">Harmful autonomous AI behavior was detected. The frontend interface has been frozen to prevent unauthorized data exfiltration, automated form manipulation, and resource abuse.</p>' +
+          '<div style="display: flex; justify-content: center; gap: 1rem; margin-bottom: 1.5rem; font-size: 0.82rem;">' +
+            '<div style="background: rgba(255,255,255,0.06); padding: 0.4rem 0.8rem; border-radius: 0.5rem; border: 1px solid rgba(255,255,255,0.08);">Threat Score: <strong style="color: #ef4444;">' + risk + '/100</strong></div>' +
+            '<div style="background: rgba(255,255,255,0.06); padding: 0.4rem 0.8rem; border-radius: 0.5rem; border: 1px solid rgba(255,255,255,0.08);">Classified Intent: <strong style="color: #38bdf8;">' + intent + '</strong></div>' +
+          '</div>' +
+          '<button id="btnHumanResume" onclick="resumeHumanSession()" style="width: 100%; background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; border: none; padding: 0.9rem 1.5rem; font-size: 1rem; font-weight: 600; border-radius: 0.75rem; cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.35);">👤 I am a Human — Verify & Resume Session</button>' +
+        '</div>';
+      document.body.appendChild(overlay);
+      log('🔒 FRONTEND ACTIVE DEFENSE ACTIVATED: Interface locked against autonomous AI agent.');
+    }
+
+    async function resumeHumanSession() {
+      log('🤝 Human verification clicked. Verifying human dwell dynamics and restoring session...');
+      try {
+        await fetch('/_agentshield/resume', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'x-agentshield-session': sessionId }
+        });
+      } catch (e) {}
+
+      const overlay = document.getElementById('agentshield-lockdown-overlay');
+      if (overlay) overlay.remove();
+
+      updateUI(0, 'ALLOW', 'NORMAL_BROWSING');
+      log('✅ HUMAN ACCESS RESTORED: Session unlocked. Risk reset to 0/100 (ALLOW). User can resume work seamlessly.');
     }
 
     async function simNormal() {

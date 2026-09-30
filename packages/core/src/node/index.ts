@@ -48,6 +48,30 @@ export function agentShield(options: AgentShieldNodeOptions = {}): RequestHandle
         }
       }
 
+      // 1b. Human Session Resume endpoint
+      const isResumeEndpoint = req.method === 'POST' && (
+        req.path === '/_agentshield/resume' ||
+        req.originalUrl?.includes('/_agentshield/resume') ||
+        req.path === '/api/agentshield/resume' ||
+        req.originalUrl?.includes('/api/agentshield/resume')
+      );
+      if (isResumeEndpoint) {
+        const sessionId = req.headers[sessionHeader.toLowerCase()] as string | undefined;
+        if (sessionId) {
+          const store = (engine as unknown as { store: import('../shared/index.js').AgentShieldStore }).store;
+          const session = await store.getSession(sessionId);
+          if (session) {
+            session.riskScore = 0;
+            session.riskLevel = 'NORMAL';
+            session.detectedIntent = 'NORMAL_BROWSING';
+            session.action = 'ALLOW';
+            await store.saveSession(session);
+          }
+        }
+        res.status(200).json({ success: true, message: 'Session successfully resumed for verified human user.' });
+        return;
+      }
+
       // 2. Normalize incoming Node/Express request
       const rawIp = req.ip || req.socket?.remoteAddress || '127.0.0.1';
       const ipHash = crypto
