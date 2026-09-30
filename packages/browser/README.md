@@ -1,8 +1,8 @@
-# @agentshield/browser
+# @motiramshinde/agentshield-browser
 
 > **Lightweight (< 5KB), privacy-first browser behavioral telemetry SDK for AgentShield.**
 
-[![npm version](https://img.shields.io/npm/v/@agentshield/browser.svg)](https://www.npmjs.com/package/@agentshield/browser)
+[![npm version](https://img.shields.io/npm/v/@motiramshinde/agentshield-browser.svg)](https://www.npmjs.com/package/@motiramshinde/agentshield-browser)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](../../LICENSE)
 
 ---
@@ -18,9 +18,9 @@
 ## Installation
 
 ```bash
-npm install @agentshield/browser
+npm install @motiramshinde/agentshield-browser
 # or
-pnpm add @agentshield/browser
+pnpm add @motiramshinde/agentshield-browser
 ```
 
 ---
@@ -28,7 +28,7 @@ pnpm add @agentshield/browser
 ## Usage
 
 ```typescript
-import { AgentShieldBrowser } from '@agentshield/browser';
+import { AgentShieldBrowser } from '@motiramshinde/agentshield-browser';
 
 const shield = new AgentShieldBrowser({
   sessionId: 'your_session_id', // optional, automatically generated if omitted

@@ -11,7 +11,7 @@ import type {
   RiskScore,
   ScoreThresholds,
   ShieldAction,
-} from '@agentshield/shared';
+} from '@motiramshinde/agentshield-shared';
 
 export interface PolicyEngineOptions {
   rules?: PolicyRule[];

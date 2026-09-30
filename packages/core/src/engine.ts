@@ -20,7 +20,7 @@ import type {
   ShieldAction,
   ShieldConfig,
   ShieldMode,
-} from '@agentshield/shared';
+} from '@motiramshinde/agentshield-shared';
 import { InMemoryStore } from './store/memory.js';
 import { TypedEventBus } from './events/event-bus.js';
 import { DefaultFeatureExtractor } from './features/extractor.js';
@@ -32,7 +32,7 @@ import { LocalChallengeProvider } from './challenge/local-challenge.js';
 export class AgentShieldEngine implements DetectionEngine {
   readonly config: Readonly<ShieldConfig>;
 
-  private readonly store: import('@agentshield/shared').AgentShieldStore;
+  private readonly store: import('@motiramshinde/agentshield-shared').AgentShieldStore;
   private readonly events: EventBus;
   private readonly extractor: FeatureExtractor;
   private readonly model: RiskModel;
@@ -45,7 +45,7 @@ export class AgentShieldEngine implements DetectionEngine {
     this.config = Object.freeze({ ...config });
     this.mode = config.mode ?? 'protect';
 
-    this.store = (config.store as import('@agentshield/shared').AgentShieldStore) ?? new InMemoryStore();
+    this.store = (config.store as import('@motiramshinde/agentshield-shared').AgentShieldStore) ?? new InMemoryStore();
     this.events = new TypedEventBus();
     this.extractor = new DefaultFeatureExtractor();
     this.model = new RuleBasedRiskModel({ sensitivity: config.sensitivity });
@@ -57,7 +57,7 @@ export class AgentShieldEngine implements DetectionEngine {
     this.challengeProvider = new LocalChallengeProvider();
   }
 
-  getStore(): import('@agentshield/shared').AgentShieldStore {
+  getStore(): import('@motiramshinde/agentshield-shared').AgentShieldStore {
     return this.store;
   }
 
@@ -262,7 +262,7 @@ export class AgentShieldEngine implements DetectionEngine {
   }
 
   private buildExplanation(
-    riskScore: { score: number; level: RiskLevel; reasons: import('@agentshield/shared').RiskReason[] },
+    riskScore: { score: number; level: RiskLevel; reasons: import('@motiramshinde/agentshield-shared').RiskReason[] },
     intent: string,
     action: ShieldAction
   ): string[] {

@@ -1,5 +1,5 @@
 {
-  "name": "@agentshield/browser",
+  "name": "@motiramshinde/agentshield-browser",
   "version": "0.1.0",
   "description": "Lightweight, privacy-first behavioral telemetry client SDK for AgentShield",
   "type": "module",
@@ -33,7 +33,7 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@agentshield/shared": "workspace:*"
+    "@motiramshinde/agentshield-shared": "workspace:*"
   },
   "keywords": [
     "agentshield",

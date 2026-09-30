@@ -10,7 +10,7 @@ import type {
   RiskModel,
   RiskReason,
   SessionState,
-} from '@agentshield/shared';
+} from '@motiramshinde/agentshield-shared';
 
 export interface RuleModelOptions {
   sensitivity?: 'lenient' | 'balanced' | 'strict';

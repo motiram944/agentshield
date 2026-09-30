@@ -1,8 +1,8 @@
-# @agentshield/node
+# @motiramshinde/agentshield-node
 
 > **Runtime behavioral firewall middleware for Express and Node.js applications.** Protects against unauthorized autonomous AI agents, headless browsers, automated scraping, and API abuse.
 
-[![npm version](https://img.shields.io/npm/v/@agentshield/node.svg)](https://www.npmjs.com/package/@agentshield/node)
+[![npm version](https://img.shields.io/npm/v/@motiramshinde/agentshield-node.svg)](https://www.npmjs.com/package/@motiramshinde/agentshield-node)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](../../LICENSE)
 
 ---
@@ -20,11 +20,11 @@
 ## Installation
 
 ```bash
-npm install @agentshield/node
+npm install @motiramshinde/agentshield-node
 # or
-pnpm add @agentshield/node
+pnpm add @motiramshinde/agentshield-node
 # or
-yarn add @agentshield/node
+yarn add @motiramshinde/agentshield-node
 ```
 
 ---
@@ -33,7 +33,7 @@ yarn add @agentshield/node
 
 ```typescript
 import express from 'express';
-import { agentShield } from '@agentshield/node';
+import { agentShield } from '@motiramshinde/agentshield-node';
 
 const app = express();
 
@@ -89,7 +89,7 @@ app.use(
 
 ## Audit Headers
 
-`@agentshield/node` automatically attaches inspection headers to every response:
+`@motiramshinde/agentshield-node` automatically attaches inspection headers to every response:
 
 - `X-AgentShield-Risk`: Normalized risk score (0–100).
 - `X-AgentShield-Action`: Enforced action (`ALLOW`, `OBSERVE`, `THROTTLE`, `CHALLENGE`, `RESTRICT`, `BLOCK`).

@@ -1,5 +1,5 @@
 {
-  "name": "@agentshield/node",
+  "name": "@motiramshinde/agentshield-node",
   "version": "0.1.0",
   "description": "Node.js and Express middleware runtime integration for AgentShield",
   "type": "module",
@@ -33,8 +33,8 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@agentshield/core": "workspace:*",
-    "@agentshield/shared": "workspace:*"
+    "@motiramshinde/agentshield-core": "workspace:*",
+    "@motiramshinde/agentshield-shared": "workspace:*"
   },
   "devDependencies": {
     "@types/express": "^5.0.0"

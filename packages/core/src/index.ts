@@ -3,7 +3,7 @@
  * Public entrypoint for @agentshield/core.
  */
 
-export * from '@agentshield/shared';
+export * from '@motiramshinde/agentshield-shared';
 
 export { AgentShieldEngine, createDetectionEngine } from './engine.js';
 export { InMemoryStore, type InMemoryStoreOptions } from './store/memory.js';

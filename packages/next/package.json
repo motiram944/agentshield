@@ -1,5 +1,5 @@
 {
-  "name": "@agentshield/next",
+  "name": "@motiramshinde/agentshield-next",
   "version": "0.1.0",
   "description": "Next.js App Router, API route handler, and middleware adapter for AgentShield",
   "type": "module",
@@ -33,8 +33,8 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@agentshield/core": "workspace:*",
-    "@agentshield/shared": "workspace:*"
+    "@motiramshinde/agentshield-core": "workspace:*",
+    "@motiramshinde/agentshield-shared": "workspace:*"
   },
   "peerDependencies": {
     "next": ">=13.0.0"

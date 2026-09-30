@@ -8,7 +8,7 @@ import type {
   FlowAnomalyResult,
   GraphEdge,
   GraphNode,
-} from '@agentshield/shared';
+} from '@motiramshinde/agentshield-shared';
 
 export class ApplicationBehaviorGraph {
   private readonly nodes = new Map<string, GraphNode>();

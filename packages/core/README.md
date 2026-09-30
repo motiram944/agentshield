@@ -1,15 +1,15 @@
-# @agentshield/core
+# @motiramshinde/agentshield-core
 
 > **Core behavioral detection, anomaly scoring, and policy evaluation engine for AgentShield.** Framework-independent with zero external network or database dependencies.
 
-[![npm version](https://img.shields.io/npm/v/@agentshield/core.svg)](https://www.npmjs.com/package/@agentshield/core)
+[![npm version](https://img.shields.io/npm/v/@motiramshinde/agentshield-core.svg)](https://www.npmjs.com/package/@motiramshinde/agentshield-core)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](../../LICENSE)
 
 ---
 
 ## Overview
 
-`@agentshield/core` is the deterministic evaluation brain powering AgentShield. It coordinates:
+`@motiramshinde/agentshield-core` is the deterministic evaluation brain powering AgentShield. It coordinates:
 - Feature extraction from requests and session historical windows.
 - Sequential ID traversal, burst request, and endpoint enumeration detection.
 - Application Behavior Graph workflow verification.
@@ -22,9 +22,9 @@
 ## Installation
 
 ```bash
-npm install @agentshield/core
+npm install @motiramshinde/agentshield-core
 # or
-pnpm add @agentshield/core
+pnpm add @motiramshinde/agentshield-core
 ```
 
 ---
@@ -32,7 +32,7 @@ pnpm add @agentshield/core
 ## Usage
 
 ```typescript
-import { createDetectionEngine, type NormalizedRequest } from '@agentshield/core';
+import { createDetectionEngine, type NormalizedRequest } from '@motiramshinde/agentshield-core';
 
 const engine = createDetectionEngine({
   mode: 'protect',

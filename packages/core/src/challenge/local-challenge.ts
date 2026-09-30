@@ -3,7 +3,7 @@
  * Self-contained local challenge provider for step-up verification and rate attenuation.
  */
 
-import type { ChallengeProvider, ChallengeResult, ShieldAction } from '@agentshield/shared';
+import type { ChallengeProvider, ChallengeResult, ShieldAction } from '@motiramshinde/agentshield-shared';
 
 interface ChallengeData {
   sessionId: string;

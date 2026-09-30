@@ -8,9 +8,9 @@ import {
   type AnalysisResult,
   type NormalizedRequest,
   type ShieldConfig,
-} from '@agentshield/core';
+} from '@motiramshinde/agentshield-core';
 
-export * from '@agentshield/core';
+export * from '@motiramshinde/agentshield-core';
 
 export interface NextAgentShieldOptions extends ShieldConfig {
   sessionHeaderName?: string;

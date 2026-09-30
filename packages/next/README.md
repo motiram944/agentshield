@@ -1,8 +1,8 @@
-# @agentshield/next
+# @motiramshinde/agentshield-next
 
 > **Next.js App Router, Route Handlers, and Edge Middleware integration for AgentShield.**
 
-[![npm version](https://img.shields.io/npm/v/@agentshield/next.svg)](https://www.npmjs.com/package/@agentshield/next)
+[![npm version](https://img.shields.io/npm/v/@motiramshinde/agentshield-next.svg)](https://www.npmjs.com/package/@motiramshinde/agentshield-next)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](../../LICENSE)
 
 ---
@@ -18,9 +18,9 @@
 ## Installation
 
 ```bash
-npm install @agentshield/next
+npm install @motiramshinde/agentshield-next
 # or
-pnpm add @agentshield/next
+pnpm add @motiramshinde/agentshield-next
 ```
 
 ---
@@ -28,7 +28,7 @@ pnpm add @agentshield/next
 ## Usage (`middleware.ts`)
 
 ```typescript
-import { createAgentShield } from '@agentshield/next';
+import { createAgentShield } from '@motiramshinde/agentshield-next';
 
 const shield = createAgentShield({
   mode: 'protect',

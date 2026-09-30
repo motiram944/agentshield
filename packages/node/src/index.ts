@@ -11,9 +11,9 @@ import {
   type NormalizedRequest,
   type ShieldConfig,
   type AnalysisResult,
-} from '@agentshield/core';
+} from '@motiramshinde/agentshield-core';
 
-export * from '@agentshield/core';
+export * from '@motiramshinde/agentshield-core';
 
 export interface AgentShieldNodeOptions extends ShieldConfig {
   /** Salt used for one-way IP hashing (defaults to runtime random salt) */
@@ -34,7 +34,7 @@ export function agentShield(options: AgentShieldNodeOptions = {}): RequestHandle
     try {
       // 1. Check if correlation telemetry endpoint is called
       if (req.method === 'POST' && req.path === '/_agentshield/events') {
-        const body = (req as unknown as { body: import('@agentshield/shared').BrowserSignalPayload }).body;
+        const body = (req as unknown as { body: import('@motiramshinde/agentshield-shared').BrowserSignalPayload }).body;
         const sessionId = req.headers[sessionHeader.toLowerCase()] as string | undefined;
         if (sessionId && body) {
           await engine.correlateBrowserSignals(sessionId, body);

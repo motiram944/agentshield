@@ -1,5 +1,5 @@
 {
-  "name": "@agentshield/core",
+  "name": "@motiramshinde/agentshield-core",
   "version": "0.1.0",
   "description": "Core behavioral analysis, anomaly detection, rule engine, and policy evaluation framework for AgentShield",
   "type": "module",
@@ -33,7 +33,7 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@agentshield/shared": "workspace:*"
+    "@motiramshinde/agentshield-shared": "workspace:*"
   },
   "keywords": [
     "agentshield",

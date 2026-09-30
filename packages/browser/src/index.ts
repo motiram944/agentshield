@@ -3,7 +3,7 @@
  * Lightweight, privacy-first browser behavioral telemetry SDK for AgentShield.
  */
 
-import type { BrowserSignalPayload } from '@agentshield/shared';
+import type { BrowserSignalPayload } from '@motiramshinde/agentshield-shared';
 
 export interface AgentShieldBrowserOptions {
   sessionId?: string;

@@ -3,7 +3,7 @@
  * In-memory session store with TTL expiration and LRU-like safety limits.
  */
 
-import type { AgentShieldStore, SessionState } from '@agentshield/shared';
+import type { AgentShieldStore, SessionState } from '@motiramshinde/agentshield-shared';
 
 interface StoreEntry {
   session: SessionState;

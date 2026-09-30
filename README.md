@@ -24,23 +24,23 @@ Detect behavior → calculate risk → understand intent → enforce policy.
 
 | Package | Version | Description |
 | :--- | :--- | :--- |
-| [`@agentshield/core`](./packages/core) | `0.1.0` | Algorithmic detection engine, anomaly analysis, graph engine, and policy evaluation. |
-| [`@agentshield/node`](./packages/node) | `0.1.0` | Node.js and Express middleware with response throttling and challenge hooks. |
-| [`@agentshield/next`](./packages/next) | `0.1.0` | Next.js App Router and Edge-compatible middleware adapter. |
-| [`@agentshield/browser`](./packages/browser) | `0.1.0` | Ultra-lightweight (<5KB) client telemetry for behavioral correlation. |
-| [`@agentshield/shared`](./packages/shared) | `0.1.0` | Shared domain models, contracts, and type definitions. |
+| [`@motiramshinde/agentshield-core`](./packages/core) | `0.1.0` | Algorithmic detection engine, anomaly analysis, graph engine, and policy evaluation. |
+| [`@motiramshinde/agentshield-node`](./packages/node) | `0.1.0` | Node.js and Express middleware with response throttling and challenge hooks. |
+| [`@motiramshinde/agentshield-next`](./packages/next) | `0.1.0` | Next.js App Router and Edge-compatible middleware adapter. |
+| [`@motiramshinde/agentshield-browser`](./packages/browser) | `0.1.0` | Ultra-lightweight (<5KB) client telemetry for behavioral correlation. |
+| [`@motiramshinde/agentshield-shared`](./packages/shared) | `0.1.0` | Shared domain models, contracts, and type definitions. |
 
 ---
 
 ## Quick Start (Express)
 
 ```bash
-npm install @agentshield/node
+npm install @motiramshinde/agentshield-node
 ```
 
 ```ts
 import express from 'express';
-import { agentShield } from '@agentshield/node';
+import { agentShield } from '@motiramshinde/agentshield-node';
 
 const app = express();
 

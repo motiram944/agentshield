@@ -3,7 +3,7 @@
  * Framework-independent typed event bus for AgentShield.
  */
 
-import type { AgentShieldEventMap, EventBus, EventCallback } from '@agentshield/shared';
+import type { AgentShieldEventMap, EventBus, EventCallback } from '@motiramshinde/agentshield-shared';
 
 export class TypedEventBus implements EventBus {
   private readonly listeners = new Map<keyof AgentShieldEventMap, Set<EventCallback<unknown>>>();
