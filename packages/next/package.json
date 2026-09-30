@@ -11,6 +11,21 @@
       "import": "./dist/index.js"
     }
   },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/motiram944/agentshield.git",
+    "directory": "packages/next"
+  },
+  "homepage": "https://github.com/motiram944/agentshield#readme",
+  "bugs": "https://github.com/motiram944/agentshield/issues",
+  "author": "Motiram Shinde",
   "scripts": {
     "build": "tsc -b",
     "clean": "rm -rf dist tsconfig.tsbuildinfo",
