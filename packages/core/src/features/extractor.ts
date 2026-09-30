@@ -8,7 +8,7 @@ import type {
   FeatureVector,
   NormalizedRequest,
   SessionState,
-} from '@motiramshinde/agentshield-shared';
+} from '../shared/index.js';
 
 // Common sensitive/probe pathname markers
 const ADMIN_PATTERNS = [/^\/api\/admin/i, /^\/admin/i, /^\/_admin/i];
