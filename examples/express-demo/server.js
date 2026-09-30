@@ -316,11 +316,19 @@ app.get('/', (req, res) => {
     function triggerFrontendLockdown(risk, intent) {
       if (document.getElementById('agentshield-lockdown-overlay')) return;
       
+      // Apply clean frosted blur directly to the application container
+      const container = document.querySelector('.container');
+      if (container) {
+        container.style.filter = 'blur(10px)';
+        container.style.transition = 'filter 0.4s cubic-bezier(0.16, 1, 0.3, 1)';
+        container.style.pointerEvents = 'none';
+      }
+
       const overlay = document.createElement('div');
       overlay.id = 'agentshield-lockdown-overlay';
-      overlay.style.cssText = 'position: fixed; inset: 0; z-index: 2147483647; background: rgba(10, 15, 29, 0.85); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); display: flex; align-items: center; justify-content: center; padding: 1.5rem; font-family: Outfit, sans-serif;';
+      overlay.style.cssText = 'position: fixed; inset: 0; z-index: 2147483647; background: rgba(9, 13, 24, 0.42); backdrop-filter: blur(12px) saturate(160%); -webkit-backdrop-filter: blur(12px) saturate(160%); display: flex; align-items: center; justify-content: center; padding: 1.5rem; font-family: Outfit, sans-serif;';
       overlay.innerHTML = 
-        '<div style="background: rgba(18, 24, 39, 0.98); border: 1px solid rgba(59, 130, 246, 0.35); border-radius: 1.25rem; max-width: 480px; width: 100%; padding: 2.25rem; box-shadow: 0 25px 60px -15px rgba(0,0,0,0.8), 0 0 35px rgba(59, 130, 246, 0.2); text-align: center; color: #f3f4f6;">' +
+        '<div style="background: rgba(18, 24, 39, 0.94); border: 1px solid rgba(59, 130, 246, 0.4); border-radius: 1.25rem; max-width: 480px; width: 100%; padding: 2.25rem; box-shadow: 0 25px 60px -15px rgba(0,0,0,0.7), 0 0 35px rgba(59, 130, 246, 0.25); text-align: center; color: #f3f4f6; backdrop-filter: blur(20px);">' +
           '<div style="width: 58px; height: 58px; border-radius: 50%; background: rgba(59, 130, 246, 0.15); border: 1px solid rgba(59, 130, 246, 0.4); display: flex; align-items: center; justify-content: center; margin: 0 auto 1.25rem auto; font-size: 26px;">🛡️</div>' +
           '<h2 style="margin: 0 0 0.5rem 0; font-size: 1.35rem; font-weight: 700; color: #f8fafc;">Security Verification</h2>' +
           '<p style="margin: 0 0 1.25rem 0; font-size: 0.9rem; line-height: 1.5; color: #94a3b8;">A brief verification check is required to protect application services and ensure uninterrupted browsing.</p>' +
@@ -374,6 +382,14 @@ app.get('/', (req, res) => {
       setTimeout(() => {
         const overlay = document.getElementById('agentshield-lockdown-overlay');
         if (overlay) overlay.remove();
+        
+        // Remove blur from container
+        const container = document.querySelector('.container');
+        if (container) {
+          container.style.filter = 'none';
+          container.style.pointerEvents = 'auto';
+        }
+
         updateUI(0, 'ALLOW', 'NORMAL_BROWSING');
         log('✅ HUMAN ACCESS RESTORED: Session unlocked. Risk reset to 0/100 (ALLOW). Legitimate user resumed.');
       }, 600);
