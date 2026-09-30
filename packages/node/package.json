@@ -1,6 +1,6 @@
 {
   "name": "@motiramshinde/agentshield-node",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Node.js and Express middleware runtime integration for AgentShield",
   "type": "module",
   "main": "./dist/index.js",
