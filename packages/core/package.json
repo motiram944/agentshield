@@ -1,0 +1,33 @@
+{
+  "name": "@agentshield/core",
+  "version": "0.1.0",
+  "description": "Core behavioral analysis, anomaly detection, rule engine, and policy evaluation framework for AgentShield",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -b",
+    "clean": "rm -rf dist tsconfig.tsbuildinfo",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@agentshield/shared": "workspace:*"
+  },
+  "keywords": [
+    "agentshield",
+    "security",
+    "firewall",
+    "behavior-analysis",
+    "anomaly-detection",
+    "bot-defense",
+    "ai-agent-defense"
+  ],
+  "license": "Apache-2.0"
+}

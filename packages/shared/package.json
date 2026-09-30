@@ -1,0 +1,21 @@
+{
+  "name": "@agentshield/shared",
+  "version": "0.1.0",
+  "description": "Shared contracts, types, and core interfaces for AgentShield",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -b",
+    "clean": "rm -rf dist tsconfig.tsbuildinfo",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": ["agentshield", "security", "firewall", "bot-detection", "ai-agent-defense", "types"],
+  "license": "Apache-2.0"
+}

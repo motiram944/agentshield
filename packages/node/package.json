@@ -1,0 +1,44 @@
+{
+  "name": "@agentshield/node",
+  "version": "0.1.0",
+  "description": "Node.js and Express middleware runtime integration for AgentShield",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -b",
+    "clean": "rm -rf dist tsconfig.tsbuildinfo",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@agentshield/core": "workspace:*",
+    "@agentshield/shared": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0"
+  },
+  "peerDependencies": {
+    "express": "^4.18.0 || ^5.0.0"
+  },
+  "peerDependenciesMeta": {
+    "express": {
+      "optional": true
+    }
+  },
+  "keywords": [
+    "agentshield",
+    "express",
+    "middleware",
+    "security",
+    "firewall",
+    "bot-protection"
+  ],
+  "license": "Apache-2.0"
+}

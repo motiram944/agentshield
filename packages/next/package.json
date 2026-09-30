@@ -1,0 +1,41 @@
+{
+  "name": "@agentshield/next",
+  "version": "0.1.0",
+  "description": "Next.js App Router, API route handler, and middleware adapter for AgentShield",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -b",
+    "clean": "rm -rf dist tsconfig.tsbuildinfo",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@agentshield/core": "workspace:*",
+    "@agentshield/shared": "workspace:*"
+  },
+  "peerDependencies": {
+    "next": ">=13.0.0"
+  },
+  "peerDependenciesMeta": {
+    "next": {
+      "optional": true
+    }
+  },
+  "keywords": [
+    "agentshield",
+    "nextjs",
+    "middleware",
+    "edge",
+    "security",
+    "firewall"
+  ],
+  "license": "Apache-2.0"
+}
